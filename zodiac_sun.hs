@@ -1,16 +1,10 @@
 import Zodiac 
 import Date
+import Data.Maybe
 
-newtype Date = Date String
-
-
-findZodiac :: String -> Zodiac
-findZodiac date = Aquarius
 
 main :: IO ()
 main = 
-    do 
-        putStrLn "Welcome to Zodiac Sun! \nEnter your date of birth to discover your Zodiac Sun Sign!"
-        input <- getLine
-        putStrLn ( "Looks like you're an " <> show (findZodiac input) <> "!")
-
+    putStrLn "Welcome to Zodiac Sun!" *>
+    putStrLn "Enter your birthday below to learn about your sun sign!" *>
+    getLine >>= \birthday -> putStrLn ("Looks like you're a " <> show (fromJust (findZodiac birthday)))
