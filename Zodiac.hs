@@ -10,7 +10,6 @@ where
 import Date
 import Data.Maybe (maybeToList, listToMaybe, fromJust)
 import GHC.Natural (Natural)
-import Text.Parsec.Token (GenTokenParser(symbol))
 
 data Zodiac =
     Capricorn

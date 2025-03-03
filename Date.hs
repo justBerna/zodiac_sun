@@ -3,7 +3,9 @@ module Date (
     createDateRange_, 
     inDateRange,
     convert_,
-    deconvert_
+    deconvert_,
+    validMonth,
+    validDay
 )
 where
 import Numeric.Natural
@@ -102,3 +104,5 @@ validMonth str =
     case str of 
         [] -> False 
         x : _ -> all (`elem` ['A'..'Z']) str && read str `elem` [JAN .. DEC]
+
+
