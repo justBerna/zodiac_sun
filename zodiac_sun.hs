@@ -14,4 +14,4 @@ main =
     putStrLn "Welcome to Zodiac Sun!" *>
     putStrLn "Enter your birthday below to find and learn about your sun sign!" *>
     putStr ">>>> " *>
-    getLine >>= \birthday ->  printZodiacInfo (findZodiac birthday)
+    getLine >>= \birthday -> printZodiacInfo (findZodiac birthday)

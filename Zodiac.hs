@@ -10,6 +10,7 @@ where
 import Date
 import Data.Maybe (maybeToList, listToMaybe, fromJust)
 import GHC.Natural (Natural)
+import Text.Parsec.Token (GenTokenParser(symbol))
 
 data Zodiac =
     Capricorn
@@ -74,4 +75,24 @@ findZodiac date = listToMaybe
 
 getZodiacInfo :: Zodiac -> String 
 getZodiacInfo zodiac = 
-    ""
+    show zodiac <> " ( " <> getDates zodiac <> " )"
+    <> "\nElement: " <> getElement zodiac <> "\nSymbol: " <> getSymbol zodiac
+
+getDates :: Zodiac -> String
+getDates zodiac = 
+    let date = findMatch zodiac dateRanges
+    in
+        fst date <> " - " <> snd date
+
+getSymbol :: Zodiac -> String
+getSymbol zodiac = findMatch zodiac symbols
+
+getElement :: Zodiac -> String 
+getElement zodiac = findMatch zodiac (take 12 (cycle elements))
+
+
+findMatch :: Zodiac -> [a] -> a
+findMatch zodiac list = head ([snd x | x <- zip zodiacList list , fst x == zodiac])
+
+zodiacList :: [Zodiac]
+zodiacList = [Capricorn .. Sagittarius]
