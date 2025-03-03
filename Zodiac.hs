@@ -6,7 +6,7 @@ module Zodiac
 where
 
 import Date
-import Data.Maybe (maybeToList, listToMaybe)
+import Data.Maybe (maybeToList, listToMaybe, fromJust)
 import GHC.Natural (Natural)
 
 data Zodiac =
@@ -59,12 +59,12 @@ symbols = [
 
 getZodiacDates :: [(Zodiac, [(Month, Natural)])]
 getZodiacDates = zip [Capricorn .. Sagittarius]
-    [ uncurry createDateRange_ x | x <- dateRanges ]
+   [fromJust (uncurry createDateRange_ x) | x <- dateRanges ]
 
 
 findZodiac :: String -> Maybe Zodiac
 findZodiac date = listToMaybe
    [ fst allDates |
        allDates <- getZodiacDates ,
-       inDateRange (snd allDates) (deconvert_ date)
+       inDateRange (snd allDates) (fromJust (deconvert_ date))
      ]
