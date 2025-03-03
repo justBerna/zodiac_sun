@@ -1,6 +1,8 @@
 module Zodiac
 (
+    Zodiac,
     findZodiac,
+    getZodiacInfo
 
 )
 where
@@ -68,3 +70,8 @@ findZodiac date = listToMaybe
        allDates <- getZodiacDates ,
        inDateRange (snd allDates) (fromJust (deconvert_ date))
      ]
+
+
+getZodiacInfo :: Zodiac -> String 
+getZodiacInfo zodiac = 
+    ""
