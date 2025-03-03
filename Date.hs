@@ -7,8 +7,8 @@ module Date (
 )
 where
 import Numeric.Natural
-import Data.Maybe (listToMaybe)
-
+import Data.Maybe (listToMaybe, isNothing, fromJust, isJust)
+import Data.Map (valid)
 
 data Month =
     JAN
@@ -39,7 +39,7 @@ inDateRange range date = date `elem` range
 
 incrementDate_ ::  String -> (Month, Natural)
 incrementDate_  monthDate =
-    let (month, day) = deconvert_ monthDate
+    let (month, day) = fromJust (deconvert_ monthDate)  -- increment date used internally on a function already checked for existance
     in
         if day + 1 < maxDays_ month
             then (month, day + 1)
@@ -48,31 +48,57 @@ incrementDate_  monthDate =
                     then (succ month, 1)
                     else (JAN, 1) 
 
-createDateRange_ :: String -> String -> [(Month, Natural)]
+createDateRange_ :: String -> String -> Maybe [(Month, Natural)]
 createDateRange_ beg end =
-    if beg == end
-        then [deconvert_ end]
-        else deconvert_ beg : createDateRange_ (convert_ (incrementDate_ beg)) end
+    if isJust (deconvert_ beg) && isJust (deconvert_ end)
+        then
+            if beg == end
+                then Just [fromJust (deconvert_ end)]
+                else Just (fromJust (deconvert_ beg) : fromJust (createDateRange_ (convert_ (incrementDate_ beg)) end))
+        else Nothing
 
 convert_ :: (Month, Natural) -> String
 convert_ (month, natural) = show month <> " " <> show natural
 
-deconvert_ :: String -> (Month, Natural)
+deconvert_ :: String -> Maybe (Month, Natural)
 deconvert_ monthDate =
-    (month_ monthDate, day_ monthDate)
+    let month = month_ monthDate
+        day = day_ monthDate
+    in
+        if isJust month && isJust day
+            then Just (fromJust month, fromJust day)
+            else Nothing 
 
-month_ :: String -> Month
+month_ :: String -> Maybe Month
 month_ date =
    let list = words date
    in
     case list of
-        [month, _] -> read month
-        _ -> JAN
+        [month, _] ->
+            if validMonth month
+                then Just (read month)
+                else Nothing
+        _ -> Nothing
 
-day_ :: String -> Natural
+day_ :: String -> Maybe Natural
 day_ date =
     let list = words date
     in
         case list of
-            [month, day] -> read day
-            _ -> 0
+            [_, day] -> 
+                if validDay day
+                    then Just (read day)
+                    else Nothing
+            _ -> Nothing
+
+validDay :: String -> Bool 
+validDay str = 
+    case str of 
+        [] -> False
+        x : _ -> all (`elem` ['0'..'9']) str
+
+validMonth :: String -> Bool 
+validMonth str = 
+    case str of 
+        [] -> False 
+        x : _ -> all (`elem` ['A'..'Z']) str && read str `elem` [JAN .. DEC]
