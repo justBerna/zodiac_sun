@@ -1,5 +1,5 @@
 # Zodiac Sun
-A personal week-long challenge to showcase my ability to pick up new tools/languages quickly.  
+A personal week-long project to challenge myself with learning a new programming language.  
 
 Find and display some data on a user's zodiac sun sign, given their date of birth as input. 
 
