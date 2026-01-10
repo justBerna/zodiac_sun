@@ -1,0 +1,24 @@
+#mainView {
+    flex: 1;
+    justify-content: 'center';
+}
+    
+#welcomeText {
+    flex: 1;
+    font-size: '10px';
+    font-weight: 'bold';
+    text-align: 'center';
+}
+
+#monthSelector {
+    flex: 0.5;
+}
+
+#daySelector {
+    flex: 0.5
+}
+
+#submitBtn {
+    flex: 2;
+    background-color:rgb(44, 163, 200);
+}
