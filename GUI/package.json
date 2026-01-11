@@ -22,6 +22,7 @@
     "@nodegui/nodegui": "^0.73.0"
   },
   "devDependencies": {
+    "file-loader": "^6.2.0",
     "node-loader": "^2.1.0",
     "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1"

@@ -12,3 +12,6 @@ ghc zodiac_sun.hs
 ```
 
 > NOTE: Date must be in the form: `MMM #` where `MMM` is the first three letters of the month in all caps. (Ex. JAN 1)
+
+
+<a target="_blank" href="https://icons8.com/icon/21106/sun">Sun</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
